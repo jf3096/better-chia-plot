@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    pre strong {
+        color: red;
+    }
+  </style>
+</head>
+<body>
+<pre id="content">
+
+</pre>
+<script src="//zhcdn01.xoyo.com/xassets/lib/jquery/1.7.2/jquery.min.js" crossorigin="anonymous"></script>
+<script>
+	let prev = '';
+
+	const run = () => {
+		fetch(`./${new URLSearchParams(location.search).get('url').replace('/wip', '')}`).then(p => p.text()).then(content => {
+			if (prev !== content) {
+				$('#content').html(content.replace(/(\d\d:\d\d:\d\d \d{4})/igm, '<strong>$1</strong>'));
+				var $target = $('html,body');
+				if ($target.height() - document.documentElement.clientHeight - $(document).scrollTop() < 50 || !prev) {
+					$target.animate({ scrollTop: $target.height() }, 1000);
+				}
+				prev = content;
+			}
+		});
+	};
+	run();
+	window.setInterval(run, 5000);
+</script>
+</body>
+</html>

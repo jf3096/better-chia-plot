@@ -17,6 +17,7 @@
     "json5": "^2.2.0",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
-    "node-run-cmd": "^1.0.1"
+    "node-run-cmd": "^1.0.1",
+    "pretty-time": "^1.1.0"
   }
 }

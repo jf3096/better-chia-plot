@@ -225,6 +225,11 @@ portfinder@^1.0.25:
     debug "^3.1.1"
     mkdirp "^0.5.5"
 
+pretty-time@^1.1.0:
+  version "1.1.0"
+  resolved "http://npm-registry.seasungame.com/pretty-time/-/pretty-time-1.1.0.tgz#ffb7429afabb8535c346a34e41873adf3d74dd0e"
+  integrity sha1-/7dCmvq7hTXDRqNOQYc63z103Q4=
+
 qs@^6.4.0:
   version "6.10.1"
   resolved "http://npm-registry.seasungame.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
