@@ -5,6 +5,8 @@ const path = require('path');
 const getConfig = require('./config');
 const formatStartCmdTplAndOverwrite = require('./utils/format-start-cmd-tpl-and-overwrite');
 const getCurrentDateString = require('./utils/get-current-date-string');
+const moveLogsWipToFinished = require('./utils/move-logs-wip-to-finished');
+const prettyDuration = require('./utils/pretty-duration');
 
 let currentWorker = 0;
 
@@ -27,15 +29,26 @@ const createNewPlotImpl = () => {
 	const filename = `chia-${getCurrentDateString()}.txt`;
 	const dest = path.resolve(__dirname, '../logs/wip', filename);
 	const logStream = fs.createWriteStream(dest, { flags: 'a', encoding: 'utf8' });
+	const starTime = +new Date();
 	chiaCli.stdout.on('data', async (data) => {
 		if (data.indexOf('Computing table 7') > -1) {
-			await createNewPlot();
+			// noinspection ES6MissingAwait
+			createNewPlot();
+			return;
 		}
 		if (data.indexOf('===complete===') > -1) {
 			currentWorker--;
-			// noinspection JSUnresolvedFunction
+			// noinspection JSUnresolvedFunction,ES6MissingAwait
 			moveLogsWipToFinished(filename);
-			await createNewPlot();
+			console.log(`${data}`);
+			logStream.write(data);
+			const durationString = `花费时间: ${prettyDuration(+new Date() - starTime)}`;
+			console.log('==================================== 分割线 ====================================');
+			console.log(durationString);
+			logStream.write(durationString);
+			// noinspection ES6MissingAwait
+			createNewPlot();
+			return;
 		}
 		console.log(`${data}`);
 		logStream.write(data);

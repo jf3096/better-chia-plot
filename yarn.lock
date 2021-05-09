@@ -141,13 +141,6 @@ http-server@^0.12.3:
     secure-compare "3.0.1"
     union "~0.5.0"
 
-iconv-lite@^0.6.2:
-  version "0.6.2"
-  resolved "http://npm-registry.seasungame.com/iconv-lite/-/iconv-lite-0.6.2.tgz#ce13d1875b0c3a674bd6a04b7f76b01b1b6ded01"
-  integrity sha1-zhPRh1sMOmdL1qBLf3awGxtt7QE=
-  dependencies:
-    safer-buffer ">= 2.1.2 < 3.0.0"
-
 json5@^2.2.0:
   version "2.2.0"
   resolved "http://npm-registry.seasungame.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
@@ -216,6 +209,11 @@ opener@^1.5.1:
   resolved "http://npm-registry.seasungame.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha1-XTfh81B3udysQwE3InGv3rKhNZg=
 
+parse-ms@^2.1.0:
+  version "2.1.0"
+  resolved "http://npm-registry.seasungame.com/parse-ms/-/parse-ms-2.1.0.tgz#348565a753d4391fa524029956b172cb7753097d"
+  integrity sha1-NIVlp1PUOR+lJAKZVrFyy3dTCX0=
+
 portfinder@^1.0.25:
   version "1.0.28"
   resolved "http://npm-registry.seasungame.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"
@@ -224,6 +222,13 @@ portfinder@^1.0.25:
     async "^2.6.2"
     debug "^3.1.1"
     mkdirp "^0.5.5"
+
+pretty-ms@^7.0.1:
+  version "7.0.1"
+  resolved "http://npm-registry.seasungame.com/pretty-ms/-/pretty-ms-7.0.1.tgz#7d903eaab281f7d8e03c66f867e239dc32fb73e8"
+  integrity sha1-fZA+qrKB99jgPGb4Z+I53DL7c+g=
+  dependencies:
+    parse-ms "^2.1.0"
 
 pretty-time@^1.1.0:
   version "1.1.0"
@@ -241,11 +246,6 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "http://npm-registry.seasungame.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
-
-"safer-buffer@>= 2.1.2 < 3.0.0":
-  version "2.1.2"
-  resolved "http://npm-registry.seasungame.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
-  integrity sha1-RPoWGwGHuVSd2Eu5GAL5vYOFzWo=
 
 secure-compare@3.0.1:
   version "3.0.1"
