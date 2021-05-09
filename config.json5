@@ -7,7 +7,7 @@
   /**
    * 当前最大同时种地数, 这个设定是为了防止缓存盘空间溢出的问题
    */
-  "maxConcurrentFarmer": 3,
+  "maxConcurrentFarmer": 4,
   /**
    * 最大线程数
    */
