@@ -114,9 +114,12 @@ module.exports = (opts) => {
 							if (!hidePermissions) {
 								html += `<td class="perms"><code>(${permsToString(file[1])})</code></td>`;
 							}
+							if (displayName.indexOf('.txt') > -1) {
+								href = `entry.html?url=${encodeURIComponent(href)}`
+							}
 							html +=
 								`<td class="file-size"><code>${sizeToString(file[1], humanReadable, si)}</code></td>` +
-								`<td class="display-name"><a href="entry.html?url=${encodeURIComponent(href)}">${displayName}</a></td>` +
+								`<td class="display-name"><a href="${href}">${displayName}</a></td>` +
 								'</tr>\n';
 						}
 					};
