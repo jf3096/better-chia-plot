@@ -1,0 +1,22 @@
+{
+  "name": "chia-q",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js --max_old_space_size=40960000",
+    "server": "http-server -c-1 -p 8080 logs",
+    "prestart": "node scripts/rewrite-http-server-html.js"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^9.0.11",
+    "@types/node": "^15.0.2",
+    "fs-extra": "^10.0.0",
+    "http-server": "^0.12.3",
+    "iconv-lite": "^0.6.2",
+    "json5": "^2.2.0",
+    "mkdirp": "^1.0.4",
+    "moment": "^2.29.1",
+    "node-run-cmd": "^1.0.1"
+  }
+}

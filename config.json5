@@ -1,0 +1,36 @@
+{
+  /**
+   * 当全部完成后將停止, 这样做的好处是如果你想停下来了 (如升级软件或者关机等) 那就没必要接着
+   * 开垦下一块地了
+   */
+  "stopWhenFinishAll": false,
+  /**
+   * 当前最大同时种地数, 这个设定是为了防止缓存盘空间溢出的问题
+   */
+  "maxConcurrentFarmer": 3,
+  /**
+   * 最大线程数
+   */
+  "thread": 4,
+  /**
+   * chia k size for (plot)
+   */
+  "kSize": 32,
+  /**
+   * 桶的个数
+   * More buckets require less RAM but more random seeks to disk. With spinning disks you want less buckets and with NVMe more buckets. There is no significant benefit from using smaller buckets
+   */
+  buckets: 64,
+  /**
+   * 内存缓冲数
+   */
+  "memoryBuffer": 8000,
+  /**
+   * p 盘临时文件夹
+   */
+  "tempFolder": "D:/p-cache",
+  /**
+   * 完成后将地块放置的文件夹位置
+   */
+  "destFolder": "E:/p-plot"
+}
