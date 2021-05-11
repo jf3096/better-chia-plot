@@ -18,7 +18,7 @@
 	let prev = '';
 
 	const run = () => {
-		fetch(`./${new URLSearchParams(location.search).get('url').replace('/wip', '')}`).then(p => p.text()).then(content => {
+		fetch(new URLSearchParams(location.search).get('url')).then(p => p.text()).then(content => {
 			if (prev !== content) {
 				$('#content').html(content.replace(/(\d\d:\d\d:\d\d \d{4})/igm, '<strong>$1</strong>'));
 				var $target = $('html,body');

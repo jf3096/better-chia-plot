@@ -32,5 +32,9 @@
   /**
    * 完成后将地块放置的文件夹位置
    */
-  "destFolder": "E:/p-plot"
+  "destFolder": "E:/p-plot",
+  /**
+   * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
+   */
+  "createNewPlotIndicator": "Computing table 6"
 }

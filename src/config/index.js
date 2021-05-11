@@ -94,6 +94,10 @@ const getConfig = async () => {
 			 * 完成后将地块放置的文件夹位置
 			 */
 			destFolder: options.destFolder,
+			/**
+			 * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
+			 */
+			createNewPlotIndicator: options.createNewPlotIndicator
 		};
 	} catch (error) {
 		const errorMessage = error.message;
@@ -116,6 +120,34 @@ const getConfig = async () => {
 			 * 当前最大同时种地数, 这个设定是为了防止缓存盘空间溢出的问题
 			 */
 			maxConcurrentFarmer: options.maxConcurrentFarmer,
+			/**
+			 * 最大线程数
+			 */
+			thread: options.thread,
+			/**
+			 * chia k size for (plot)
+			 */
+			kSize: options.kSize,
+			/**
+			 * 桶的个数
+			 */
+			buckets: options.buckets,
+			/**
+			 * 内存缓冲数
+			 */
+			memoryBuffer: options.memoryBuffer,
+			/**
+			 * p 盘临时文件夹
+			 */
+			tempFolder: options.tempFolder,
+			/**
+			 * 完成后将地块放置的文件夹位置
+			 */
+			destFolder: options.destFolder,
+			/**
+			 * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
+			 */
+			createNewPlotIndicator: options.createNewPlotIndicator
 		};
 	}
 };
