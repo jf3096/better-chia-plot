@@ -20,21 +20,25 @@
    * 桶的个数
    * More buckets require less RAM but more random seeks to disk. With spinning disks you want less buckets and with NVMe more buckets. There is no significant benefit from using smaller buckets
    */
-  buckets: 64,
+  buckets: 128,
   /**
    * 内存缓冲数
    */
-  "memoryBuffer": 8000,
+  "memoryBuffer": 6500,
   /**
    * p 盘临时文件夹
    */
-  "tempFolder": "D:/p-cache",
+  "tempFolder": "D:/Chia_cache",
+  /**
+   * p 盘临时文件夹2
+   */
+  "tempFolder2": "C:/Chia_cache",
   /**
    * 完成后将地块放置的文件夹位置
    */
-  "destFolder": "E:/p-plot",
+  "destFolder": "F:/Chia_worker_wd",
   /**
    * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
    */
-  "createNewPlotIndicator": "Computing table 6"
+  "createNewPlotIndicator": "Backpropagating on table 7"
 }

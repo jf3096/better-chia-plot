@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js --max_old_space_size=40960000",
-    "server": "http-server -c-1 -p 8080 logs",
+    "server": "http-server -c-1 -p 8001 logs",
     "prestart": "node scripts/rewrite-http-server-html.js"
   },
   "dependencies": {

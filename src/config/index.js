@@ -91,6 +91,10 @@ const getConfig = async () => {
 			 */
 			tempFolder: options.tempFolder,
 			/**
+			 * p 盘临时文件夹2
+			 */
+			tempFolder2: options.tempFolder2,
+			/**
 			 * 完成后将地块放置的文件夹位置
 			 */
 			destFolder: options.destFolder,
@@ -140,6 +144,10 @@ const getConfig = async () => {
 			 * p 盘临时文件夹
 			 */
 			tempFolder: options.tempFolder,
+			/**
+			 * p 盘临时文件夹2
+			 */
+			tempFolder2: options.tempFolder2,
 			/**
 			 * 完成后将地块放置的文件夹位置
 			 */

@@ -57,7 +57,7 @@ const createNewPlotImpl = async () => {
 			// noinspection JSUnresolvedFunction,ES6MissingAwait
 			const splits = filename.split('.txt');
 			const duration = prettyDuration(+new Date() - starTime);
-			const newFilename = `${splits[0]}~${duration}.txt`;
+			const newFilename = `${splits[0]} ~ ${duration} ~ ${getCurrentDateString()}.txt`;
 			// noinspection ES6MissingAwait
 			moveLogsWipToFinished(filename, newFilename);
 			console.log(`${data}`);
