@@ -18,10 +18,7 @@ const formatStartCmdTplAndOverwrite = async () => {
 	const tpl = formatTpl(startCmdTpl, config);
 	console.log('当前 start.bat 为: \n\n' + tpl + '\n\n');
 	await fs.writeFile(startBatPathname, tpl);
+	return config;
 };
-
-(async () => {
-	console.log(await formatStartCmdTplAndOverwrite());
-})();
 
 module.exports = formatStartCmdTplAndOverwrite;

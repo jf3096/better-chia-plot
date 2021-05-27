@@ -1,104 +1,78 @@
-const spawn = require('child_process').spawn;
 const fs = require('fs-extra');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const getConfig = require('./config');
 const formatStartCmdTplAndOverwrite = require('./utils/format-start-cmd-tpl-and-overwrite');
-const getCurrentDateString = require('./utils/get-current-date-string');
-const moveLogsWipToFinished = require('./utils/move-logs-wip-to-finished');
-const prettyDuration = require('./utils/pretty-duration');
-
-let currentWorker = 0;
-
-let isFirstQueueReachSpecificStage = false;
-let isInit = true;
-
-let underNewPlotIndicatorCounter = 0;
-
-const createNewPlot = async () => {
-	const config = await getConfig();
-	if (config.stopWhenFinishAll) {
-		console.log('stopWhenFinishAll = true, 将完成当前所以种地后终止');
-		return;
-	}
-	if (isInit || (isFirstQueueReachSpecificStage && currentWorker < config.maxConcurrentFarmer)) {
-		isInit = false;
-		currentWorker++;
-		underNewPlotIndicatorCounter++;
-		console.log('============================== createNewPlot =================================');
-		isFirstQueueReachSpecificStage = false;
-		// noinspection ES6MissingAwait
-		createNewPlotImpl();
-	}
-};
-
-const createNewPlotImpl = async () => {
-	const startBatPathname = path.resolve(__dirname, 'bat/start.bat');
-	const chiaCli = spawn(startBatPathname);
-	const filename = `chia-${getCurrentDateString()}.txt`;
-	const dest = path.resolve(__dirname, '../logs/wip', filename);
-	const logStream = fs.createWriteStream(dest, { flags: 'a', encoding: 'utf8' });
-	const starTime = +new Date();
-	const config = await getConfig();
-	chiaCli.stdout.on('data', async (data) => {
-		data = data.toString();
-
-		if (data.indexOf(config.createNewPlotIndicator) > -1) {
-			underNewPlotIndicatorCounter--;
-			isFirstQueueReachSpecificStage = true;
-			console.log(`${data}`);
-			logStream.write(data);
-			// noinspection ES6MissingAwait
-			createNewPlot();
-			return;
-		}
-		if (data.trim() === '===complete===') {
-			currentWorker--;
-			// noinspection JSUnresolvedFunction,ES6MissingAwait
-			const splits = filename.split('.txt');
-			const duration = prettyDuration(+new Date() - starTime);
-			const newFilename = `${splits[0]}~${duration}.txt`;
-			// noinspection ES6MissingAwait
-			moveLogsWipToFinished(filename, newFilename);
-			console.log(`${data}`);
-			logStream.write(data);
-			const durationString = `花费时间: ${duration}`;
-			console.log('==================================== 分割线 ====================================');
-			console.log(durationString);
-			logStream.write(durationString);
-			if (underNewPlotIndicatorCounter === 0) {
-				// noinspection ES6MissingAwait
-				createNewPlot();
-			}
-			return;
-		}
-		console.log(`${data}`);
-		logStream.write(data);
-	});
-
-	chiaCli.stderr.on('data', function(data) {
-		console.log('stderr: ' + data);
-	});
-
-	chiaCli.on('close', function(code) {
-		console.log('子进程已退出，退出码 ' + code);
-	});
-};
+const spawnHttpServer = require('./process/spawn-http-server');
+const PlotterManager = require('./models/plotter-manager');
 
 (async () => {
 	const config = await getConfig();
 
+	/**
+	 * 获取 wip 文件路径
+	 * @type {string}
+	 */
 	const wipPathname = path.resolve(__dirname, '../logs/wip');
+	/**
+	 * 获取完成的路径
+	 * @type {string}
+	 */
 	const finishedPathname = path.resolve(__dirname, '../logs/finished');
-	const bakEntry = path.resolve(__dirname, '../bak/entry.html');
-
-	await formatStartCmdTplAndOverwrite();
-	// await fs.removeSync(config.tempFolder);
-	// await fs.removeSync(wipPathname);
+	/**
+	 * 获取备份文件 entry.html 路径
+	 * @type {string}
+	 */
+	const entryHtml = path.resolve(__dirname, '../bak/entry.html');
+	/**
+	 * 移除临时目录
+	 */
+	await fs.removeSync(config.tempFolder);
+	/**
+	 * 清除 wip 文件夹所有日志文件
+	 */
+	await fs.removeSync(wipPathname);
+	/**
+	 * 创建 wip 文件路径
+	 */
 	mkdirp.sync(wipPathname);
+	/**
+	 * 创建完成的文件路径
+	 */
 	mkdirp.sync(finishedPathname);
+	/**
+	 * 创建临时文件夹
+	 */
 	mkdirp.sync(config.tempFolder);
-	fs.copySync(bakEntry, path.resolve(wipPathname, 'entry.html'));
+	/**
+	 * 将 entry.html 复制到 wip 中
+	 */
+	fs.copySync(entryHtml, path.resolve(wipPathname, 'entry.html'));
+	/**
+	 * 创建 http-server 子进程
+	 */
+	spawnHttpServer(config.server);
+	/**
+	 * 创建耕地管理器
+	 * @type {PlotterManager}
+	 */
+	const plotterManager = new PlotterManager({ maxConcurrentFarmer: config.maxConcurrentFarmer });
 
-	await createNewPlot();
+	// noinspection ES6MissingAwait
+	/**
+	 * 开始耕地
+	 */
+	plotterManager.start();
+	/**
+	 * 间隔输出答应日志
+	 */
+	if (config.print.interval) {
+		setInterval(() => {
+			/**
+			 * 输出打印
+			 */
+			console.clear();
+			plotterManager.print();
+		}, config.print.interval * 1000);
+	}
 })();

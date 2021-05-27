@@ -11,12 +11,25 @@
   "dependencies": {
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^15.0.2",
+    "cli-table3": "^0.6.0",
     "fs-extra": "^10.0.0",
+    "glob": "^7.1.7",
     "http-server": "^0.12.3",
     "json5": "^2.2.0",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "node-run-cmd": "^1.0.1",
-    "pretty-ms": "^7.0.1"
+    "os-utils": "^0.0.14",
+    "pretty-ms": "^7.0.1",
+    "prettysize": "^2.0.0",
+    "shelljs": "^0.8.4"
+  },
+  "pkg": {
+    "scripts": "build/**/*.js",
+    "assets": "views/**/*",
+    "targets": [
+      "node14-linux-arm64"
+    ],
+    "outputPath": "dist"
   }
 }

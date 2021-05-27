@@ -7,7 +7,7 @@
   /**
    * 当前最大同时种地数, 这个设定是为了防止缓存盘空间溢出的问题
    */
-  "maxConcurrentFarmer": 4,
+  "maxConcurrentFarmer": 1,
   /**
    * 最大线程数
    */
@@ -24,17 +24,38 @@
   /**
    * 内存缓冲数
    */
-  "memoryBuffer": 8000,
+  "memoryBuffer": 7600,
   /**
    * p 盘临时文件夹
    */
-  "tempFolder": "D:/p-cache",
+  "tempFolder": "C:/p-cache",
   /**
    * 完成后将地块放置的文件夹位置
    */
-  "destFolder": "E:/p-plot",
+  "destFolder": "G:/c-plots",
   /**
    * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
    */
-  "createNewPlotIndicator": "Computing table 6"
+  "createNewPlotIndicator": [
+    "Starting phase 2/4",
+    "Copied final file from"
+  ],
+  /**
+   * 开启服务
+   */
+  "server": {
+    /**
+     * 开启服务端口
+     */
+    "port": "8899"
+  },
+  /**
+   * 开启服务端口
+   */
+  "print": {
+    /**
+     * 打印间隔时间, 单位: 秒
+     */
+    "interval": 30
+  }
 }

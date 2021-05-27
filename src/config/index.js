@@ -1,6 +1,7 @@
 const JSON5 = require('json5');
 const path = require('path');
 const fs = require('fs-extra');
+const findChiaDaemonPath = require('../utils/find-chia-daemon-path');
 
 /**
  * 路径辅助方法
@@ -55,12 +56,34 @@ const getConfig = async () => {
 			// noinspection ExceptionCaughtLocallyJS
 			throw new Error(`[buckets: 桶的个数] 非法值 = ${options.buckets}. 有效值取其中一个 [64, 128, 256]`);
 		}
+		/**
+		 * 检查 chia Daemon 文件路径
+		 */
+		if (!options.chiaDaemonPath) {
+			/**
+			 * 如果没有找到则采取策略自动获取
+			 */
+			options.chiaDaemonPath = await findChiaDaemonPath();
+		}
 
+		/**
+		 * 检查临时文件路径是否存在
+		 */
 		await Promise.all([fs.access(options.tempFolder), fs.access(options.destFolder)]);
 
+		/**
+		 * 记住最后一次正确配置
+		 * @type {string}
+		 */
 		lastCorrectConfigString = json5String;
 
 		return {
+			...options,
+			/**
+			 * chia 守护进程位置, 如 C:\Users\Administrator\AppData\Local\chia-blockchain\app-1.1.4\resources\app.asar.unpacked\daemon
+			 * 默认为空, 程序会自动搜索用户目录下 AppData\Local\chia-blockchain 最新版 chia
+			 */
+			chiaDaemonPath: options.chiaDaemonPath,
 			/**
 			 * 当全部完成后將停止, 这样做的好处是如果你想停下来了 (如升级软件或者关机等) 那就没必要接着
 			 * 开垦下一块地了
@@ -97,7 +120,11 @@ const getConfig = async () => {
 			/**
 			 * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
 			 */
-			createNewPlotIndicator: options.createNewPlotIndicator
+			createNewPlotIndicator: options.createNewPlotIndicator,
+			/**
+			 * 服务配置
+			 */
+			server: options.server,
 		};
 	} catch (error) {
 		const errorMessage = error.message;
@@ -147,7 +174,7 @@ const getConfig = async () => {
 			/**
 			 * 当日志出现下面的如 "Computing table 6" 时创建新的 plot
 			 */
-			createNewPlotIndicator: options.createNewPlotIndicator
+			createNewPlotIndicator: options.createNewPlotIndicator,
 		};
 	}
 };
